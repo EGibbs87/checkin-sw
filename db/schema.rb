@@ -11,11 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170405170338) do
+ActiveRecord::Schema.define(version: 20170406141550) do
 
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "depart_time"
+    t.string   "depart_time_zone"
+    t.datetime "return_time"
+    t.string   "return_time_zone"
+    t.string   "confirmation_number"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,6 +44,8 @@ ActiveRecord::Schema.define(version: 20170405170338) do
     t.string   "sw_password"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -15,6 +15,10 @@ group :production do
   gem 'rails_12factor'
 end
 
+# async workers
+gem 'redis'
+gem 'sidekiq'
+
 # Use devise for Auth
 gem 'devise'
 # Use mechanize for headless browsing
