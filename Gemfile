@@ -13,6 +13,7 @@ group :production do
   gem 'pg'
   # rails_12factor for logging
   gem 'rails_12factor'
+  gem 'thin'
 end
 
 # async workers
