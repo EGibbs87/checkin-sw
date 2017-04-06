@@ -1,2 +1,2 @@
 web: bundle exec thin start -p $PORT -e $RAILS_ENV
-worker: bundle exec sidekiq -e production
+worker: bundle exec sidekiq
