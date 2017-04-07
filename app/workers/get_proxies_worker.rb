@@ -7,6 +7,7 @@ class GetProxiesWorker
     
     Proxy.destroy_all
     
+    response = agent.get("https://hidemy.name/en/proxy-list/?maxtime=1500")
     pages = response.at('div', :id => 'proxy__pagination').search('ul')[5].search('li').last.text.to_i
     
     pages.times do |i|
