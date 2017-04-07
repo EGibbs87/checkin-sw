@@ -13,7 +13,7 @@ class GetProxiesWorker
     
     rows[1..-2].each do |r|
       tds = r.search('td')
-      Proxy.create(ip: tds[0], port: tds[1])
+      Proxy.create(ip: tds[0].text, port: tds[1].text)
     end
       
   end
