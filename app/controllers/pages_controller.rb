@@ -6,6 +6,48 @@ class PagesController < ApplicationController
   def index
     @pages = Page.all
   end
+  
+  def create_trip
+    case params[:d_timezone]
+    when "Eastern Time (US & Canada)"
+      d_utc_time = params[:d_datetime] + 5.hours
+    when "Central Time (US & Canada)"
+      d_utc_time = params[:d_datetime] + 6.hours
+    when "Mountain Time (US & Canada)"
+      d_utc_time = params[:d_datetime] + 7.hours
+    when "Pacific Time (US & Canada)"
+      d_utc_time = params[:d_datetime] + 8.hours
+    else
+      puts "ERROR PARSING DATE"
+      return false
+    end
+    
+    if params[:d_datetime].in_time_zone(params[:d_timezone]).dst?
+      d_utc_time = d_utc_time - 1.hour
+    end
+    
+    case params[:a_timezone]
+    when "Eastern Time (US & Canada)"
+      a_utc_time = params[:a_datetime] + 5.hours
+    when "Central Time (US & Canada)"
+      a_utc_time = params[:a_datetime] + 6.hours
+    when "Mountain Time (US & Canada)"
+      a_utc_time = params[:a_datetime] + 7.hours
+    when "Pacific Time (US & Canada)"
+      a_utc_time = params[:a_datetime] + 8.hours
+    else
+      puts "ERROR PARSING DATE"
+      return false
+    end
+    
+    if params[:a_datetime].in_time_zone(params[:a_timezone]).dst?
+      a_utc_time = a_utc_time - 1.hour
+    end
+    
+    confirmation_number = params[:confirmation]
+    
+    current_user.trips.create(depart_time: d_utc_time, depart_time_zone: params[:d_timezone], return_time: a_utc_time, return_time_zone: params[:a_timezone], confirmation_number: confirmation_number)
+  end
 
   # GET /pages/1
   # GET /pages/1.json
