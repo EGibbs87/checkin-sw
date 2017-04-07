@@ -7,12 +7,12 @@ class GetProxiesWorker
     
     Proxy.destroy_all
     
-    response = agent.get("https://hidemy.name/en/proxy-list/?maxtime=1500")
+    response = agent.get("https://hidemy.name/en/proxy-list/?maxtime=1500&type=s")
     pages = response.at('div', :id => 'proxy__pagination').search('ul')[5].search('li').last.text.to_i
     
     pages.times do |i|
       n = i * 64
-      response = agent.get("https://hidemy.name/en/proxy-list/?maxtime=1500&start=#{n}#list")
+      response = agent.get("https://hidemy.name/en/proxy-list/?maxtime=1500&type=s&start=#{n}#list")
       table = response.at('table')
       rows = table.search('tr')
       
