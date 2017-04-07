@@ -1,0 +1,9 @@
+:concurrency: 5
+:verbose: false
+:logfile: ./log/sidekiq.log
+:queues:
+  - [high, 7]
+  - [medium, 5]
+  - [low, 3]
+production:
+  :concurrency: 15
