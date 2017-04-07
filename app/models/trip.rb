@@ -20,34 +20,3 @@ class Trip < ActiveRecord::Base
     agent.submit(form, button)
   end
 end
-
-def run
-  failed = []
-  worked = []
-  Proxy.all.each do |proxy|
-    agent = Mechanize.new
-    agent.set_proxy proxy.ip, proxy.port
-    begin
-      agent.get('http://www.google.com')
-      puts proxy.id
-      puts agent.response
-      worked << proxy.id
-    rescue
-      failed << proxy.id
-    end
-  end
-end
-
-def individ_run(id)
-  failed = []
-  worked = []
-  proxy = Proxy.find(id)
-  agent = Mechanize.new
-  agent.set_proxy proxy.ip, proxy.port
-  t = Trip.first
-  ci_response = agent.post('https://www.southwest.com/flight/retrieveCheckinDoc.html', { 'confirmationNumber' => t.confirmation_number, 'firstName' => t.user.first_name, 'lastName' => t.user.last_name, 'submitButton' => 'Check In' })
-  
-  return response
-    
-end
-
