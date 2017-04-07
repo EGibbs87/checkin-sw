@@ -19,6 +19,8 @@ end
 # async workers
 gem 'redis'
 gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'sidekiq-status'
 
 # Use devise for Auth
 gem 'devise'
