@@ -2,6 +2,8 @@ class Trip < ActiveRecord::Base
 	belongs_to :user
          
   def check_in
+    GetProxiesWorker.perform_async
+    sleep(9.minutes + 50.seconds)
     agent = Mechanize.new
     
     agent.robots = false
