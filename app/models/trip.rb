@@ -4,9 +4,20 @@ class Trip < ActiveRecord::Base
   def check_in
     GetProxiesWorker.perform_async
     # allow testing
-    if DateTime.now > DateTime.new(2017,4,8,12,19)
-      sleep(9.minutes + 50.seconds)
+    # if DateTime.now > DateTime.new(2017,4,8,12,19)
+    #   sleep(9.minutes + 50.seconds)
+    # end
+    
+    if DateTime.now.to_date == self.depart_time.to_date - 1.day
+      direction = "depart"
+      flight_time = self.depart_time
+    else
+      direction = "return"
+      flight_time = self.return_time
     end
+    
+    # set amount of time to sleep (to start process 20 seconds before checkin time)
+    sleep_time = ((flight_time.strftime("%M").to_i - DateTime.now.strftime("%M").to_i).minutes - 20.seconds)
     agent = Mechanize.new
     
     agent.robots = false
