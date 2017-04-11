@@ -41,15 +41,19 @@ class Trip < ActiveRecord::Base
       
       f_response = agent.submit(form, button)
       
-      # force a random error if response includes "24 hours" (tried too early)
+      # raise error if response includes "24 hours" (tried too early)
        if f_response.content.match("24 hours")
-         puts "Too early, trying again"
-         a = nil
-         a.strftime("%Y-%m")
+         proxy_retry = 1
+         raise
        end
     rescue
-      puts "proxy index #{i} failed"
-      i += 1
+      if proxy_retry == 1
+        puts "Tried pulling too early; retry with same proxy"
+        proxy_retry = 0
+      else
+        puts "Proxy index #{i} failed; retry with next proxy"
+        i += 1
+      end
       retry
     end
   end
