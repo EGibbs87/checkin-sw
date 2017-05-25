@@ -40,22 +40,7 @@
     <%= f.label "Last Name" %><br />
     <%= f.text_field :last_name, autocomplete: "off" %>
   </div>
-  
-  <div class="field">
-    <%= f.label "Southwest Account Username" %><br />
-    <%= f.text_field :sw_username, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label "Southwest Account Password" %><br />
-    <%= f.password_field :sw_password, autocomplete: "off" %>
-  </div>
-  
-  <div class="field">
-    <%= f.label "Confirm Southwest Account Password" %><br />
-    <%= f.password_field :sw_confirm_pwd, autocomplete: "off" %>
-  </div>
-  
   <div class="actions">
     <%= f.submit "Update", id: "form-submit" %>
   </div>

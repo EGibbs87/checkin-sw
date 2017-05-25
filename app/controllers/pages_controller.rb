@@ -8,45 +8,61 @@ class PagesController < ApplicationController
   end
   
   def create_trip
-    case params[:d_timezone]
-    when "Eastern Time (US & Canada)"
-      d_utc_time = params[:d_datetime] + 5.hours
-    when "Central Time (US & Canada)"
-      d_utc_time = params[:d_datetime] + 6.hours
-    when "Mountain Time (US & Canada)"
-      d_utc_time = params[:d_datetime] + 7.hours
-    when "Pacific Time (US & Canada)"
-      d_utc_time = params[:d_datetime] + 8.hours
-    else
-      puts "ERROR PARSING DATE"
-      return false
+    #### brute force date parsing ####
+    # case params[:d_timezone]
+    # when "Eastern Time (US & Canada)"
+    #   d_utc_time = params[:d_datetime] + 5.hours
+    # when "Central Time (US & Canada)"
+    #   d_utc_time = params[:d_datetime] + 6.hours
+    # when "Mountain Time (US & Canada)"
+    #   d_utc_time = params[:d_datetime] + 7.hours
+    # when "Pacific Time (US & Canada)"
+    #   d_utc_time = params[:d_datetime] + 8.hours
+    # else
+    #   puts "ERROR PARSING DATE"
+    #   return false
+    # end
+    
+    # if params[:d_datetime].in_time_zone(params[:d_timezone]).dst?
+    #   d_utc_time = d_utc_time - 1.hour
+    # end
+    
+    # case params[:a_timezone]
+    # when "Eastern Time (US & Canada)"
+    #   a_utc_time = params[:a_datetime] + 5.hours
+    # when "Central Time (US & Canada)"
+    #   a_utc_time = params[:a_datetime] + 6.hours
+    # when "Mountain Time (US & Canada)"
+    #   a_utc_time = params[:a_datetime] + 7.hours
+    # when "Pacific Time (US & Canada)"
+    #   a_utc_time = params[:a_datetime] + 8.hours
+    # else
+    #   puts "ERROR PARSING DATE"
+    #   return false
+    # end
+    
+    # if params[:a_datetime].in_time_zone(params[:a_timezone]).dst?
+    #   a_utc_time = a_utc_time - 1.hour
+    # end
+    
+    d_tz = params[:trip][:d_timezone]
+    r_tz = params[:trip][:r_timezone]
+    
+    puts params[:trip]['d_datetime(2i)']
+    
+    Time.zone = d_tz
+    d_time = Time.zone.parse(params[:trip]['d_datetime(1i)']+"-"+params[:trip]['d_datetime(2i)']+"-"+params[:trip]['d_datetime(3i)']+" "+params[:trip]['d_datetime(4i)']+":"+params[:trip]['d_datetime(5i)'])
+    Time.zone = r_tz
+    r_time = Time.zone.parse(params[:trip]['r_datetime(1i)']+"-"+params[:trip]['r_datetime(2i)']+"-"+params[:trip]['r_datetime(3i)']+" "+params[:trip]['r_datetime(4i)']+":"+params[:trip]['r_datetime(5i)'])
+    
+    confirmation_number = params[:trip][:confirmation]
+    
+    current_user.trips.create(depart_time: d_time, depart_time_zone: d_tz, return_time: r_time, return_time_zone: r_tz, confirmation_number: confirmation_number)
+    
+    respond_to do |format|
+      format.html { }
+      format.js { }
     end
-    
-    if params[:d_datetime].in_time_zone(params[:d_timezone]).dst?
-      d_utc_time = d_utc_time - 1.hour
-    end
-    
-    case params[:a_timezone]
-    when "Eastern Time (US & Canada)"
-      a_utc_time = params[:a_datetime] + 5.hours
-    when "Central Time (US & Canada)"
-      a_utc_time = params[:a_datetime] + 6.hours
-    when "Mountain Time (US & Canada)"
-      a_utc_time = params[:a_datetime] + 7.hours
-    when "Pacific Time (US & Canada)"
-      a_utc_time = params[:a_datetime] + 8.hours
-    else
-      puts "ERROR PARSING DATE"
-      return false
-    end
-    
-    if params[:a_datetime].in_time_zone(params[:a_timezone]).dst?
-      a_utc_time = a_utc_time - 1.hour
-    end
-    
-    confirmation_number = params[:confirmation]
-    
-    current_user.trips.create(depart_time: d_utc_time, depart_time_zone: params[:d_timezone], return_time: a_utc_time, return_time_zone: params[:a_timezone], confirmation_number: confirmation_number)
   end
 
   # GET /pages/1

@@ -1,26 +1,34 @@
-<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountaint", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
+<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountain", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
 
 <div id="new-trip">
-  <%= simple_form_for(:trip, :url => 'create_trip_url' ) do |f| %>
-    <ul>
-      <li>
-        <div class='row'>
-          <div class='col s6 input-field'>
-            <%= f.text_field :confirmation, id: 'confirmation', class: "validate", type: "text", autofocus: 'true' %>
-            <label for="confirmation" class="active">Username</label>
-          </div>
-          <div class='col s6 input-field'>
-            <%= f.select :d_timezone, options_for_select(timezones), id: 'd_timezone', class: "validate", type: "text", autofocus: 'true' %>
-            <label for="d_timezone" class="active">Departing Flight Timezone</label>
-          </div>
-          <div class='col s6 input-field'>
-            <%= f.text_field :d_datetime, id: 'd_datetime', class: "validate", type: "text", autofocus: 'true' %>
-            <label for="d_datetime" class="active">Departing Flight Date/Time</label>
-          </div>
-
-        </div>
-      </li>
-    </ul>
+  <%= simple_form_for(:trip, :url => create_trip_path, :method => "POST", :remote => true ) do |f| %>
+    <div class='row'>
+      <div class='col s6 input-field'>
+        <label for="confirmation" class="active">Confirmation Number</label>
+        <%= f.text_field :confirmation, id: 'confirmation', type: "text", autofocus: 'true' %>
+      </div>
+      <p><b>Departing Flight</b></p>
+      <div class='col s6 input-field'>
+        <label for="d_timezone" class="active">Departing Flight Timezone</label>
+        <%= f.select :d_timezone, options_for_select(timezones), id: 'd_timezone', type: "text", autofocus: 'true' %>
+      </div>
+      <div class='col s6 input-field'>
+        <label for="d_datetime" class="active">Departing Flight Date/Time</label>
+        <%= f.datetime_select :d_datetime, :step => 1, :ampm => true, id: 'd_datetime', type: "text", autofocus: 'true' %>
+      </div>
+      <p><b>Return Flight</b></p>
+      <div class='col s6 input-field'>
+        <label for="r_timezone" class="active">Return Flight Timezone</label>
+        <%= f.select :r_timezone, options_for_select(timezones), id: 'r_timezone', type: "text", autofocus: 'true' %>
+      </div>
+      <div class='col s6 input-field'>
+        <label for="r_datetime" class="active">Return Flight Date/Time</label>
+        <%= f.datetime_select :r_datetime, :step => 1, :ampm => true, id: 'r_datetime', type: "text", autofocus: 'true' %>
+      </div>
+    </div>
+    <button class="btn blue waves-effect waves-light" type="submit" name="action" id='home-submit-page'>Submit
+      <i class="mdi-content-send right"></i>
+    </button>
   <% end %>
 </div>
 
