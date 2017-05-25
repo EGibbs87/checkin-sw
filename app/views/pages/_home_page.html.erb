@@ -1,0 +1,27 @@
+<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountaint", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
+
+<div id="new-trip">
+  <%= simple_form_for(:trip, :url => 'create_trip_url' ) do |f| %>
+    <ul>
+      <li>
+        <div class='row'>
+          <div class='col s6 input-field'>
+            <%= f.text_field :confirmation, id: 'confirmation', class: "validate", type: "text", autofocus: 'true' %>
+            <label for="confirmation" class="active">Username</label>
+          </div>
+          <div class='col s6 input-field'>
+            <%= f.select :d_timezone, options_for_select(timezones), id: 'd_timezone', class: "validate", type: "text", autofocus: 'true' %>
+            <label for="d_timezone" class="active">Departing Flight Timezone</label>
+          </div>
+          <div class='col s6 input-field'>
+            <%= f.text_field :d_datetime, id: 'd_datetime', class: "validate", type: "text", autofocus: 'true' %>
+            <label for="d_datetime" class="active">Departing Flight Date/Time</label>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+  <% end %>
+</div>
+
+<%= link_to "Edit Profile", edit_user_registration_path %>

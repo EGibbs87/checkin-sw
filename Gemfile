@@ -22,6 +22,8 @@ gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sidekiq-status'
 
+# Use simple-form
+gem 'simple_form'
 # Use devise for Auth
 gem 'devise'
 # Use mechanize for headless browsing
