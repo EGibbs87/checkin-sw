@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.all
+    @trips = current_user.trips.order(:depart_time)
   end
   
   def create_trip

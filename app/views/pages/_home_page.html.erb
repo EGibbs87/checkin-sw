@@ -1,4 +1,52 @@
-<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountain", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
+<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountaint", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
+<% past_trips = @trips.where('depart_time < ? AND return_time < ?', Time.now, Time.now) %>
+<% current_trips = @trips.where('depart_time < ? AND return_time >= ?', Time.now, Time.now) %>
+<% upcoming_trips = @trips.where('depart_time >= ?', Time.now) %>
+
+
+<table style="width:100%; margin-left:100px; margin-right:100px">
+  <tr>
+    <th>Confirmation Number</th>
+    <th>Departure</th>
+    <th>Return</th>
+  </tr>
+  <% unless past_trips.empty? %>
+    <tr>
+      <td colspan="3" style="text-align:center"><b><i>PAST</i></b></td>
+    </tr>
+  <% end %>
+  <% past_trips.each do |t| %>
+    <tr>
+      <td style="text-align:center"><%= t.confirmation_number %></td>
+      <td style="text-align:center"><%= t.depart_time.in_time_zone(t.depart_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.return_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+    </tr>
+  <% end %>
+  <% unless current_trips.empty? %>
+    <tr>
+      <td colspan="3" style="text-align:center"><b><i>CURRENT</i></b></td>
+    </tr>
+  <% end %>
+  <% current_trips.each do |t| %>
+    <tr>
+      <td style="text-align:center"><%= t.confirmation_number %></td>
+      <td style="text-align:center"><%= t.depart_time.in_time_zone(t.depart_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.return_time.in_time_zone(t.return_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+    </tr>
+  <% end %>
+  <% unless upcoming_trips.empty? %>
+    <tr>
+      <td colspan="3" style="text-align:center"><b><i>UPCOMING</i></b></td>
+    </tr>
+  <% end %>
+  <% upcoming_trips.each do |t| %>
+    <tr>
+      <td style="text-align:center"><%= t.confirmation_number %></td>
+      <td style="text-align:center"><%= t.depart_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.return_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+    </tr>
+  <% end %>
+</table>
 
 <div id="new-trip">
   <%= simple_form_for(:trip, :url => create_trip_path, :method => "POST", :remote => true ) do |f| %>
