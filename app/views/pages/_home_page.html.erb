@@ -19,7 +19,7 @@
     <tr>
       <td style="text-align:center"><%= t.confirmation_number %></td>
       <td style="text-align:center"><%= t.depart_time.in_time_zone(t.depart_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
-      <td style="text-align:center"><%= t.return_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.return_time.in_time_zone(t.return_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
     </tr>
   <% end %>
   <% unless current_trips.empty? %>
@@ -42,11 +42,15 @@
   <% upcoming_trips.each do |t| %>
     <tr>
       <td style="text-align:center"><%= t.confirmation_number %></td>
-      <td style="text-align:center"><%= t.depart_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
-      <td style="text-align:center"><%= t.return_time.strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.depart_time.in_time_zone(t.depart_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
+      <td style="text-align:center"><%= t.return_time.in_time_zone(t.return_time_zone).strftime("%Y/%m/%d %I:%M %p %Z") %></td>
     </tr>
   <% end %>
 </table>
+
+<hr />
+<h2 style="text-align:center">Add a New Trip</h2>
+<hr />
 
 <div id="new-trip">
   <%= simple_form_for(:trip, :url => create_trip_path, :method => "POST", :remote => true ) do |f| %>
