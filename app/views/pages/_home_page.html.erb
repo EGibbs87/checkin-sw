@@ -10,6 +10,8 @@
     <th>Departure</th>
     <th>Return</th>
   </tr>
+  <% if @trips.empty? %>
+  <tr></tr>
   <% unless past_trips.empty? %>
     <tr>
       <td colspan="3" style="text-align:center"><b><i>PAST</i></b></td>
