@@ -61,6 +61,8 @@ class PagesController < ApplicationController
     
     current_user.trips.create(depart_time: d_time, depart_time_zone: d_tz, return_time: r_time, return_time_zone: r_tz, confirmation_number: confirmation_number)
     
+    @trips = current_user.trips.order(:depart_time)
+    
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }
