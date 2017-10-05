@@ -1,4 +1,4 @@
-<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountaint", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
+<% timezones = [["Eastern", "Eastern Time (US & Canada)"], ["Central", "Central Time (US & Canada)"], ["Mountain", "Mountain Time (US & Canada)"], ["Pacific", "Pacific Time (US & Canada)"]] %>
 <% past_trips = @trips.where('depart_time < ? AND return_time < ?', Time.now, Time.now) %>
 <% current_trips = @trips.where('depart_time < ? AND return_time >= ?', Time.now, Time.now) %>
 <% upcoming_trips = @trips.where('depart_time >= ?', Time.now) %>

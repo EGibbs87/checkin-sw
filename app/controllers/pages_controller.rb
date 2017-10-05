@@ -62,7 +62,7 @@ class PagesController < ApplicationController
     current_user.trips.create(depart_time: d_time, depart_time_zone: d_tz, return_time: r_time, return_time_zone: r_tz, confirmation_number: confirmation_number)
     
     respond_to do |format|
-      format.html { }
+      format.html { redirect_to root_url }
       format.js { }
     end
   end
